@@ -517,6 +517,7 @@ void imu_getTemperature(void)
 void imu_getAngle(void)
 {   
 	imu_genericIncremental_3axis(&imu_angle.dw, BASE_DELTA_ANG);
+        imu_angle.dw.y = imu_accele.dw.x;
 	imu_discrete2real_3axis(imu_angle.dw, &imu_angle.f, DELTA_ANG_UNIT);
 	imu_check_switch_pm();
 /*
