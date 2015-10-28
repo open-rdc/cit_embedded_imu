@@ -518,6 +518,12 @@ void imu_getAngle(void)
 {   
 	imu_genericIncremental_3axis(&imu_angle.dw, BASE_DELTA_ANG);
         imu_angle.dw.y = imu_accele.dw.x;
+        if(imu_angle.dw.y > 0x04C50000 && imu_angle.dw.y < 0x55D50000){
+            imu_angle.dw.y = 0x04C40000;
+        }
+        else if(imu_angle.dw.y < 0xFB3B0000 && imu_angle.dw.y > 0xAA2B0000){
+            imu_angle.dw.y = 0xFB3C0000;
+        }
 	imu_discrete2real_3axis(imu_angle.dw, &imu_angle.f, DELTA_ANG_UNIT);
 	imu_check_switch_pm();
 /*
